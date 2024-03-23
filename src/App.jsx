@@ -1,5 +1,6 @@
 
 import Guitar from "./components/Guitar";
+import Header from "./components/Header";
 import { db } from "./data/db";
 import { useState } from "react";
 
@@ -8,6 +9,7 @@ function App() {
   console.log(data);
   return (
     <>
+      <Header/>
       <h1 className="py-5 md:pt-10 text-yellow-500 font-bold text-5xl text-center">Nuestra Colección</h1>
       <div className="grid md:grid-cols-2 gap-y-20 max-w-4xl mx-auto px-5 py-10 ">
         
