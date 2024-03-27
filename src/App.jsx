@@ -1,48 +1,22 @@
-import { useState } from "react"
-import { db } from "./data/db"
-import Guitar from "./components/Guitar/Guitar"
-import Header from "./components/Header/Header"
+import { userCart } from "./hooks/userCart"
+
+import Guitar from "./components/Guitar"
+import Header from "./components/Header"
 
 function App() {
-  const [data, setData] = useState(db)
-  const [cart, setCart] = useState([])
-
-  const MAX_ITEMS = 3;
-  const MIN_ITEMS = 1;
-
-  function addToCart(item){
-    const itemExists = cart.findIndex(guitar => guitar.id == item.id)
-    if (itemExists < 0) {
-      item.quantity = 1 
-      setCart([...cart, item])
-    }
-    else {
-      if (cart[itemExists].quantity >= MAX_ITEMS) return
-        const updatedCart = [...cart]
-        updatedCart[itemExists].quantity++
-        setCart(updatedCart)
-    }
-  }
-
-  function decreaseQuantity(id){
-    console.log('-1 producto...');
-  }
-  
-  function increaseQuantity(){
-    console.log('+1 producto...');
-  }
-
-  function emptyCart(){
-    setCart([])
-  }
+  const { data, cart, addToCart, removeFromCart, decreaseQuantity, 
+          increaseQuantity, emptyCart, cartTotal, isEmpty } = userCart()
 
   return (
     <>
       <Header
-      cart={cart}
-      increaseQuantity={increaseQuantity}
-      decreaseQuantity={decreaseQuantity}
-      emptyCart={emptyCart}
+        cart={cart}
+        removeFromCart={removeFromCart}
+        increaseQuantity={increaseQuantity}
+        decreaseQuantity={decreaseQuantity}
+        emptyCart={emptyCart}
+        cartTotal={cartTotal}
+        isEmpty={isEmpty}
       />
 
       <h1 className="py-5 md:pt-10 text-yellow-500 font-bold text-5xl text-center">Nuestra Colección</h1>
@@ -50,9 +24,9 @@ function App() {
         
         {data?.map((guitar) => (
           <Guitar 
-          key={guitar.id} 
-          guitar={guitar}
-          addToCart={addToCart}
+            key={guitar.id} 
+            guitar={guitar}
+            addToCart={addToCart}
           />
           ))}
 
